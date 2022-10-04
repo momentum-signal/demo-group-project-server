@@ -1,0 +1,20 @@
+{
+  "name": "demo-group-project-server",
+  "version": "1.0.0",
+  "description": "A demo project to understand the workflow with team members to obey with as a whole.",
+  "main": "index.js",
+  "scripts": {
+    "development": "NODE_ENV=development nodemon index.js",
+    "production": "NODE_ENV=production node index.js"
+  },
+  "repository": "https://github.com/momentum-signal/demo-group-project-server",
+  "author": "Momentum Signal",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "win-node-env": "^0.6.1"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
