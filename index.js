@@ -11,6 +11,9 @@ const cors = require("cors");
 const colors = require("colors");
 require("dotenv").config();
 
+/* internal imports */
+const dbConnection = require("./utilities/db.utility");
+
 /* router level connection */
 
 /* application level connection */
@@ -25,6 +28,7 @@ app.use(cors());
 /* global error handler */
 
 /* db connection */
+dbConnection();
 
 /* enable connection */
 app.get("/", (req, res) => {
