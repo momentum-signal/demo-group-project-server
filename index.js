@@ -27,13 +27,24 @@ app.use(cors());
 /* db connection */
 
 /* enable connection */
-app.status(200).json({
-  acknowledgement: true,
-  message: "OK",
-  description: "The request is OK",
+app.get("/", (req, res) => {
+  try {
+    res.status(200).json({
+      acknowledgement: true,
+      message: "OK",
+      description: "The request is OK",
+    });
+  } catch (error) {
+    res.status(204).json({
+      acknowledgement: false,
+      message: "No Content",
+      description:
+        "The request has been successfully processed, but is not returning any content",
+    });
+  }
 });
 
 /* enable port */
 app.listen(port, () => {
-  console.log(colors.green.bold(`Success: listening on port ${port}`));
+  console.log(colors.cyan.bold(`Success: listening on port ${port}`));
 });
