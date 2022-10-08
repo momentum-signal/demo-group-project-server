@@ -4,6 +4,11 @@ const bcrypt = require("bcryptjs");
 /* internal import */
 const User = require("../schemas/user.schema");
 
+exports.displayAllUserServices = async () => {
+  const result = await User.find({}).select("-password -confirmPassword");
+  return result;
+};
+
 exports.registerAnUserService = async (data) => {
   const user = new User(data);
   const result = await user.save();
