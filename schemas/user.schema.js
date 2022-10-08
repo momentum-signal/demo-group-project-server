@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const colors = require("colors");
+const crypto = require("crypto");
 
 /* created model schema */
 const userSchema = mongoose.Schema(
@@ -11,15 +12,15 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please provide a first name"],
       trim: true,
-      minLength: [3, "Name must be at least 3 characters."],
-      maxLength: [100, "Name is too large"],
+      minLength: [3, "First name must be at least 3 characters."],
+      maxLength: [100, "First name is too large"],
     },
     lastName: {
       type: String,
-      required: [true, "Please provide a first name"],
+      required: [true, "Please provide a last name"],
       trim: true,
-      minLength: [3, "Name must be at least 3 characters."],
-      maxLength: [100, "Name is too large"],
+      minLength: [3, "Last name must be at least 3 characters."],
+      maxLength: [100, "Last name is too large"],
     },
     email: {
       type: String,
@@ -29,44 +30,45 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Please enter your password"],
+      required: [true, "Password is required"],
       validate: {
-        validator: (value) => {
+        validator: (value) =>
           validator.isStrongPassword(value, {
-            minLength: 5,
+            minLength: 4,
             minLowercase: 1,
-            minUppercase: 1,
             minNumbers: 1,
+            minUppercase: 1,
             minSymbols: 1,
-          });
-        },
-        message: "Password {VALUE} is not strong enough",
+          }),
+        message: "Password {VALUE} is not strong enough.",
       },
     },
     confirmPassword: {
       type: String,
       required: [true, "Please confirm your password"],
       validate: {
-        validator: (value) => {
+        validator: function (value) {
           return value === this.password;
         },
-        message: "Password {VALUE} won't match",
+        message: "Passwords don't match!",
       },
     },
-    avatar: {
-      type: String,
-      required: [true, "Please post your avatar"],
-      unique: [true, "Avatar exists, provide a new"],
-    },
+    // avatar: {
+    //   type: String,
+    //   required: [true, "Please post your avatar"],
+    //   unique: [true, "Avatar exists, provide a new"],
+    // },
     contactNumber: {
       type: String,
       validate: {
         validator: (value) => {
-          validator.isMobilePhone("bn-BD", value);
+          validator.isMobilePhone(`+88${value}`, "bn-BD");
         },
         message: "Phone number {VALUE} is not valid",
       },
     },
+    confirmationToken: String,
+    confirmationTokenExpires: Date,
     status: {
       type: String,
       enum: ["active", "inactive", "blocked"],
@@ -90,6 +92,7 @@ userSchema.pre("save", async function (next) {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(this.password, salt);
     this.password = hash;
+    this.confirmPassword = this.password;
   } catch (error) {
     next(error);
   }
@@ -102,6 +105,17 @@ userSchema.post("save", async function (next) {
     next(error);
   }
 });
+
+userSchema.methods.generateConfirmationToken = function () {
+  const token = crypto.randomBytes(32).toString("hex");
+  this.confirmationToken = token;
+
+  const date = new Date();
+  date.setDate(date.getDate() + 1);
+  this.confirmationTokenExpires = date;
+
+  return token;
+};
 
 const User = new mongoose.model("Users", userSchema);
 
