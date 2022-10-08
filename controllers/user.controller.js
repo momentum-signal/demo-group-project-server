@@ -6,7 +6,23 @@ const User = require("../schemas/user.schema");
 const {
   registerAnUserService,
   loggedAnUserService,
+  displayAllUserServices,
 } = require("../services/user.service");
+
+exports.displayAllUsers = async (req, res, next) => {
+  try {
+    const result = await displayAllUserServices();
+
+    res.status(200).json({
+      acknowledgement: true,
+      message: "OK",
+      description: "Fetching all user users form DB",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.registerAnUser = async (req, res, next) => {
   try {
