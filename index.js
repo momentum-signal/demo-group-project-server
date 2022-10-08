@@ -16,15 +16,19 @@ const dbConnection = require("./utilities/db.utility");
 const errorHandler = require("./middlewares/error.middleware");
 
 /* router level connection */
+const router = require("./routes/user.route");
 
 /* application level connection */
 const app = express();
 const port = process.env.PORT || 5000;
 
 /* middleware connection */
+app.use(express.json());
 app.use(cors());
+app.use(express.static("avatars"));
 
 /* router connection */
+app.use(router);
 
 /* global error handler */
 app.use(errorHandler);
