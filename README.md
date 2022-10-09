@@ -9,12 +9,12 @@
 
 ```bash
 {
-    "firstName": "Hasibul",
-    "lastName": "Islam",
-    "email": "hasib143sl@gmail.com",
-    "password": "Ab3@",
-    "confirmPassword": "Ab3@",
-    "contactNumber": "01906315901"
+  "firstName": "Hasibul",
+  "lastName": "Islam",
+  "email": "hasib143sl@gmail.com",
+  "password": "Ab3@",
+  "confirmPassword": "Ab3@",
+  "contactNumber": "01906315901"
 }
 ```
 
@@ -23,8 +23,8 @@
 
 ```bash
 {
-    "email": "hasib143sl@gmail.com",
-    "password": "Ab3@"
+  "email": "hasib143sl@gmail.com",
+  "password": "Ab3@"
 }
 ```
 
@@ -34,3 +34,9 @@
 
 - To Reset password
   - PATCH - `http://localhost:5000/reset?email=USER_EMAIL_ADDRESS`
+
+```bash
+{
+  "password": "Kc3@"
+}
+```
