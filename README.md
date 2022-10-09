@@ -40,3 +40,6 @@
   "password": "Kc3@"
 }
 ```
+
+- For uploading avatar
+  - POST - `http://localhost:5000/avatar`
