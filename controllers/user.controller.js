@@ -136,14 +136,15 @@ exports.resetPassword = async (req, res, next) => {
   }
 };
 
-exports.avatarUpload = async(req, res, next) => {
+exports.avatarUpload = async (req, res, next) => {
   try {
     res.status(202).json({
       acknowledgement: true,
       message: "Accepted",
-      description: "Avatar uploading complete"
-    })
+      description: "Avatar uploading complete",
+      data: req.file.filename
+    });
   } catch (error) {
     next(error);
   }
-}
+};
