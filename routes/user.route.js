@@ -10,6 +10,7 @@ const {
   resetPassword,
   avatarUpload,
 } = require("../controllers/user.controller");
+const authorization = require("../middlewares/authorization.middleware");
 const upload = require("../middlewares/upload.middleware");
 const verifyToken = require("../middlewares/verifyToken.middleware");
 
@@ -17,7 +18,7 @@ const verifyToken = require("../middlewares/verifyToken.middleware");
 const router = express.Router();
 
 router.post("/avatar", upload.single("avatar"), avatarUpload);
-router.get("/all", verifyToken, displayAllUsers);
+router.get("/all", verifyToken, authorization("user"), displayAllUsers);
 router.post("/signup", registerAnUser);
 router.post("/signin", loggedAnUser);
 router.get("/:token", confirmEmail);
