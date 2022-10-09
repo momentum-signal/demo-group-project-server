@@ -8,7 +8,7 @@ const colors = require("colors");
  */
 function dbConnection() {
   mongoose
-    .connect(process.env.DB_URI, {
+    .connect(process.env.DB_LOCAL, {
       dbName: "demo-group-project",
       useNewUrlParser: true,
       useUnifiedTopology: true,
