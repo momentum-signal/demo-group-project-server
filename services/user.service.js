@@ -45,6 +45,10 @@ exports.loggedAnUserService = async (data) => {
   }
 };
 
+/**
+ * reset update help
+ * https://www.codegrepper.com/code-examples/javascript/mongoose+update+one+by+id
+ */
 exports.resetPasswordService = async (email, data) => {
   const hashedPassword = bcrypt.hashSync(data.password);
   console.log(hashedPassword);
