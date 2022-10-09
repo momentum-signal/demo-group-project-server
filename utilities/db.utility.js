@@ -12,7 +12,8 @@ function dbConnection() {
       dbName: "demo-group-project",
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
+      // useCreateIndex: true,
+      // useFindAndModify: true
     })
     .then(() =>
       console.log(colors.yellow.bold("Success: establishing DB connection"))
