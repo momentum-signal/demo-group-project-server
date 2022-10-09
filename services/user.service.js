@@ -51,11 +51,10 @@ exports.loggedAnUserService = async (data) => {
  */
 exports.resetPasswordService = async (email, data) => {
   const hashedPassword = bcrypt.hashSync(data.password);
-  console.log(hashedPassword);
   const result = await User.findOneAndUpdate(
     { email },
     { $set: { password: hashedPassword } },
-    { upsert: true, runValidators: true }
+    { runValidators: true }
   );
   return result;
 };
