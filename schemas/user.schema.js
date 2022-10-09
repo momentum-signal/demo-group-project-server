@@ -53,11 +53,12 @@ const userSchema = mongoose.Schema(
         message: "Passwords don't match!",
       },
     },
-    // avatar: {
-    //   type: String,
-    //   required: [true, "Please post your avatar"],
-    //   unique: [true, "Avatar exists, provide a new"],
-    // },
+    avatar: {
+      type: String,
+      unique: [true, "Avatar exists, provide a new"],
+      default:
+        "https://i.pinimg.com/564x/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.jpg",
+    },
     contactNumber: {
       type: String,
       validate: {
