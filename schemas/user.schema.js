@@ -74,6 +74,11 @@ const userSchema = mongoose.Schema(
       enum: ["active", "inactive", "blocked"],
       default: "inactive",
     },
+    role: {
+      type: String,
+      enum: ["admin", "user"],
+      default: "user",
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -105,6 +110,11 @@ userSchema.post("save", async function (next) {
     next(error);
   }
 });
+
+// userSchema.methods.comparePasswords = function (password, hashedPassword) {
+//   const isValidPassword = bcrypt.compareSync(password, hashedPassword);
+//   return isValidPassword;
+// };
 
 userSchema.methods.generateConfirmationToken = function () {
   const token = crypto.randomBytes(32).toString("hex");
