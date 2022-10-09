@@ -29,4 +29,8 @@
 ```
 
 - To display all user
+
   - GET - `http://localhost:5000/all`
+
+- To Reset password
+  - PATCH - `http://localhost:5000/reset?email=USER_EMAIL_ADDRESS`
