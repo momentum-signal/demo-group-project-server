@@ -2,6 +2,10 @@
 const mongoose = require("mongoose");
 const colors = require("colors");
 
+/**
+ * Error: MongooseError: Operation `users.insertOne()` buffering timed out after 10000ms
+ * https://stackoverflow.com/questions/65680842/error-mongooseerror-operation-users-insertone-buffering-timed-out-after-1
+ */
 function dbConnection() {
   mongoose
     .connect(process.env.DB_URI, {
