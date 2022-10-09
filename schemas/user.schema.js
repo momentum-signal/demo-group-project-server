@@ -92,6 +92,10 @@ const userSchema = mongoose.Schema(
 );
 
 /* middlewares to encrypt password */
+/**
+ * bcrypt.compareSync is always returning false
+ * https://angularfixing.com/why-bcrypt-comparesync-always-return-false/
+ */
 userSchema.pre("save", async function (next) {
   try {
     // hash the password only if the password has been changed or user is new
