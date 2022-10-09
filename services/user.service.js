@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 
 /* internal import */
 const User = require("../schemas/user.schema");
+const { getToken } = require("../utilities/token.utility");
 
 exports.displayAllUserServices = async () => {
   const result = await User.find({}).select("-password -confirmPassword");
@@ -19,13 +20,23 @@ exports.loggedAnUserService = async (data) => {
   const userInfo = await User.findOne({
     email: data.email,
   });
-  const { password, confirmPassword, ...user } = userInfo.toObject();
+  const { password, ...user } = userInfo.toObject();
+  const token = getToken(user);
 
   if (user) {
-    if (bcrypt.compareSync(data.password, password || confirmPassword)) {
+    const isValidPassword = bcrypt.compareSync(
+      data.password.toString(),
+      password
+    );
+    console.log(isValidPassword);
+    if (
+      // bcrypt.compareSync(data.password, password)
+      isValidPassword
+    ) {
       return {
         _redirect: true,
         user,
+        token,
       };
     } else {
       return { _redirect: false, error: "Password is wrong!" };
