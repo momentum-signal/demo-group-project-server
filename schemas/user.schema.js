@@ -94,10 +94,15 @@ const userSchema = mongoose.Schema(
 /* middlewares to encrypt password */
 userSchema.pre("save", async function (next) {
   try {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(this.password, salt);
+    // hash the password only if the password has been changed or user is new
+    if (!this.isModified("password")) {
+      next();
+      return;
+    }
+
+    const hash = bcrypt.hashSync(this.password);
     this.password = hash;
-    this.confirmPassword = this.password;
+    this.confirmPassword = undefined;
   } catch (error) {
     next(error);
   }
