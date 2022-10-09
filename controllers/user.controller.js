@@ -7,6 +7,7 @@ const {
   registerAnUserService,
   loggedAnUserService,
   displayAllUserServices,
+  resetPasswordService,
 } = require("../services/user.service");
 
 exports.displayAllUsers = async (req, res, next) => {
@@ -114,6 +115,21 @@ exports.confirmEmail = async (req, res, next) => {
       acknowledgement: true,
       message: "OK",
       description: "Registration verification complete",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const result = await resetPasswordService(req.query.email, req.body);
+
+    res.status(202).json({
+      acknowledgement: true,
+      message: "Accepted",
+      description: "Password reset, use new password",
+      data: result,
     });
   } catch (error) {
     next(error);
