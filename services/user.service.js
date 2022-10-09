@@ -28,7 +28,6 @@ exports.loggedAnUserService = async (data) => {
       data.password.toString(),
       password
     );
-    console.log(isValidPassword);
     if (
       // bcrypt.compareSync(data.password, password)
       isValidPassword
@@ -44,4 +43,15 @@ exports.loggedAnUserService = async (data) => {
   } else {
     return { _redirect: false, error: "User not exist!" };
   }
+};
+
+exports.resetPasswordService = async (email, data) => {
+  const hashedPassword = bcrypt.hashSync(data.password);
+  console.log(hashedPassword);
+  const result = await User.findOneAndUpdate(
+    { email },
+    { $set: { password: hashedPassword } },
+    { upsert: true, runValidators: true }
+  );
+  return result;
 };
